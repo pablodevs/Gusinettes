@@ -52,6 +52,6 @@ module.exports = {
             template: 'template.html',
             favicon: 'favicon.ico',
         }),
-        new Dotenv({ safe: true, systemvars: true }),
+        new Dotenv(),
     ],
 };
