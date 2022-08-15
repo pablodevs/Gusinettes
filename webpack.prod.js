@@ -7,6 +7,9 @@ module.exports = merge(common, {
         publicPath: '/'
     },
     plugins: [
-        new Dotenv()
+        new Dotenv(),
+        new webpack.DefinePlugin({
+            BACKEND_URL: JSON.stringify(process.env.BACKEND_URL)
+        })
     ]
 });
