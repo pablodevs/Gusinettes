@@ -27,7 +27,7 @@ export const ListMenu = ({ color, listId }) => {
       <div className={`menu__actions ${menu ? 'active' : ''}`}>
         <button
           className='menu__btn-search'
-          onClick={() => console.log('search')}
+          onClick={() => console.log('searching')}
         >
           <IconContext.Provider
             value={{
