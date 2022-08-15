@@ -3,11 +3,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { IconContext } from 'react-icons';
 import { AiFillEdit } from 'react-icons/ai';
-import { BsArrowLeftShort, BsCheck2, BsPlusLg } from 'react-icons/bs';
+import { BsArrowLeftShort, BsCheck2, BsPlusLg, BsThreeDots } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
 import todoList from '../../../img/todo-list.png';
 import '../../../styles/components/popups/list.scss';
 import { Context } from '../../store/appContext';
+import { ListMenu } from './list-menu.jsx';
 import { Todo } from './todo.jsx';
 
 export const List = props => {
@@ -138,7 +139,6 @@ export const List = props => {
             sourceIndex: source.index,
             destinationIndex: destination.index,
         });
-        // Crear el "manda las completadas abajo"
     };
 
     return (
@@ -303,6 +303,7 @@ export const List = props => {
                     </div>
                 </IconContext.Provider>
             </button>
+            <ListMenu color={list.color} listId={list.id} />
         </div>
     );
 };

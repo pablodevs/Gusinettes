@@ -73,6 +73,7 @@
     "dependencies": {
         "cloudinary": "^1.28.1",
         "css-loader": "^6.6.0",
+        "heroku": "^7.62.0",
         "prop-types": "^15.6.1",
         "react": "^16.8.4",
         "react-beautiful-dnd": "^13.1.0",

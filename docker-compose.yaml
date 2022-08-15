@@ -1,0 +1,41 @@
+version: '3.5'
+services:
+
+    flask-api:
+        image: flask-api:0.0.0
+        depends_on:
+            db:
+                condition: service_healthy
+        build:
+            context: .
+            dockerfile: ./src/Dockerfile
+        ports:
+            - '3001:3001'
+        environment:
+            DATABASE_URL: postgres://myuser:mypassword@db/gusiapp
+            FLASK_APP_KEY: 'any key works'
+            FLASK_APP: app.py
+            FLASK_ENV: development
+        restart: always
+        # entrypoint: ['/usr/local/bin/entrypoint.sh']
+
+    db:
+        image: postgres:14.2-alpine
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_DB: gusiapp
+            POSTGRES_USER: myuser
+            POSTGRES_PASSWORD: mypassword
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -q -U myuser -d gusiapp" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+        restart: always
+
+volumes:
+    postgres_data:

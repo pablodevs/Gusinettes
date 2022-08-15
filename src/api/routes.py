@@ -54,7 +54,7 @@ def getUserInfo():
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -73,7 +73,7 @@ def setUserImg():
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
 
@@ -103,7 +103,7 @@ def createNewList():
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -126,7 +126,7 @@ def updateList(list_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
 
@@ -157,7 +157,7 @@ def deleteList(list_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -178,7 +178,7 @@ def getAllLists(share):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -202,7 +202,7 @@ def createNewTodo(list_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation (Se podría chequear que exista la lista)
+    # User validation (Se podría chequear que exista la lista)
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -236,7 +236,7 @@ def getAllTodos(list_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -257,7 +257,7 @@ def updateTodo(todo_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
 
@@ -287,7 +287,7 @@ def deleteTodo(todo_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
     
@@ -319,7 +319,7 @@ def reorderList(list_id):
     currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
     user = User.query.get(currentUserId)
 
-    # Data validation
+    # User validation
     if user is None:
         raise APIException('User not found in data base.', status_code=404)
 
@@ -342,5 +342,27 @@ def reorderList(list_id):
 
     return jsonify({"message": "Ok", "status": "success"}), 200
 
-# Para mover los completed todos a abajo, algo como:
-# allTodos = sorted(allTodos, key=lambda todo: todo["complete"])
+# Sort todos by completed
+@api.route('/list/<int:list_id>/sort', methods=['PUT'])
+@jwt_required() # Cuando se recive una peticion, se valida que exista ese token y que sea valido
+def sortList(list_id):
+    """
+    Single list
+    """
+    
+    currentUserId = get_jwt_identity() # obtiene el id del usuario asociado al token (id == sub en jwt decode)
+    user = User.query.get(currentUserId)
+
+    # User validation
+    if user is None:
+        raise APIException('User not found in data base.', status_code=404)
+
+    allTodos = Todo.query.filter_by(list_id = list_id).all()
+    allTodos = sorted(allTodos, key=lambda todo: todo.complete)
+    
+    for idx, todo in enumerate(allTodos):
+        todo.index = idx
+
+    db.session.commit()
+
+    return jsonify({"message": "Ok", "status": "success"}), 200

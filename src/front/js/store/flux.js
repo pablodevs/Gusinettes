@@ -106,10 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 const options = {
                     method: 'PUT',
-                    body: JSON.stringify({
-                        sourceIndex: sourceIndex,
-                        destinationIndex: destinationIndex,
-                    }),
+                    body: JSON.stringify({ sourceIndex, destinationIndex }),
                     headers: {
                         Authorization: 'Bearer ' + store.token,
                         'Content-type': 'application/json',
@@ -117,6 +114,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                 };
 
                 return fetch(`${process.env.BACKEND_URL}/api/list/${listId}/reorder`, options)
+                    .then(response => response.json())
+                    .then(resp => actions.getTodos(listId))
+                    .catch(error => console.error(error));
+            },
+
+            // Send completed tasks to bottom
+            sortTodosByComplete: async (listId) => {
+                const store = getStore();
+                const actions = getActions();
+
+                const options = {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: 'Bearer ' + store.token,
+                        'Content-type': 'application/json',
+                    },
+                };
+
+                await fetch(`${process.env.BACKEND_URL}/api/list/${listId}/sort`, options)
                     .then(response => response.json())
                     .then(resp => actions.getTodos(listId))
                     .catch(error => console.error(error));

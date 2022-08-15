@@ -13,29 +13,37 @@
     &.btn--primary {
         color: var(--clr-primary-400);
     }
+
     &.btn--secondary {
         color: var(--clr-secondary-400);
     }
+
     &.btn--dark {
         color: var(--clr-dark-400);
     }
+
     &.btn--danger {
         color: var(--clr-danger-400);
     }
+
     &:active {
         transform: translateY(2px);
     }
+
     &:hover,
     &:focus-visible {
         &.btn--primary {
             color: var(--clr-primary-200);
         }
+
         &.btn--secondary {
             color: var(--clr-secondary-300);
         }
+
         &.btn--dark {
             color: var(--clr-dark-200);
         }
+
         &.btn--danger {
             color: var(--clr-danger-200);
         }
@@ -62,6 +70,7 @@
     &:hover {
         border-color: var(--clr-primary-300);
         color: var(--clr-primary-300);
+
         path {
             color: var(--clr-primary-300);
         }
@@ -98,14 +107,17 @@
         color: var(--clr-primary-500);
         background-color: var(--clr-primary-200);
     }
+
     &.home-link--secondary {
         color: var(--clr-secondary-500);
         background-color: var(--clr-secondary-200);
     }
+
     &.home-link--dark {
         color: var(--clr-dark-500);
         background-color: var(--clr-dark-200);
     }
+
     &.home-link--danger {
         color: var(--clr-danger-500);
         background-color: var(--clr-danger-200);
@@ -125,15 +137,20 @@
     border-radius: 50%;
     background-color: white;
     box-shadow: $bs-icon;
+
     &:active,
     &:hover {
         background-color: var(--clr-dark-100);
     }
 
-    &--plus {
+    &--plus,
+    &--menu,
+    &--sort,
+    &--search {
         padding: 0.8rem;
         color: white;
         background-color: var(--clr-danger-300);
+
         &:active,
         &:hover {
             background-color: var(--clr-danger-200);
@@ -143,6 +160,7 @@
     &--check {
         padding: 0.5rem;
         color: var(--clr-secondary-400);
+
         // background-color: var(--clr-secondary-400);
         &:active,
         &:hover {
@@ -155,8 +173,10 @@
 [class*='btn-delete'] {
     display: flex;
     margin-left: auto;
+
     .icon-delete {
         color: var(--clr-dark-300);
+
         &:hover {
             color: red;
         }

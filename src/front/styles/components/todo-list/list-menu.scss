@@ -1,0 +1,35 @@
+.menu {
+  &__btn-toggle {
+    position: absolute;
+    z-index: 1;
+    inset: auto auto 1.2rem 1.2rem;
+
+    .btn-icon--menu {
+      transition: transform 0.2s ease-out;
+
+      &.active {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &__actions {
+    position: absolute;
+    inset: auto auto 1.2rem 1.2rem;
+    display: flex;
+    gap: 0.8rem;
+
+    & .btn-icon {
+      display: none;
+    }
+
+    &.active {
+      transform: translateX(65%);
+
+      & .btn-icon {
+        display: block;
+      }
+    }
+
+  }
+}
